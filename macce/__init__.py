@@ -1,8 +1,8 @@
 import os
 # os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
-# Exporting envs:
-from macce.envs.multi_agent_combat_env_rgb import MultiAgentCombatEnvRGB
+# Exporting env:
+from macce.env.multi_agent_combat_env_rgb import MultiAgentCombatEnvRGB
 
 from gym import make
 

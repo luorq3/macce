@@ -1,4 +1,4 @@
-from macce.envs.sprites.base import Missile
+from macce.env.sprites.base import Missile
 
 from pygame.rect import Rect
 

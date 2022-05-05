@@ -12,7 +12,7 @@ class SpriteBase(Sprite):
         super(SpriteBase, self).__init__()
         self.screen_size = screen_size
         self.rect = rect
-        self.center = [0, 0]
+        self.center = self.get_center_coord()
         size = (self.rect.width, self.rect.height)
         self.max_rect = [screen - size for screen, size in zip(self.screen_size, size)]
 

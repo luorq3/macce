@@ -3,9 +3,9 @@ from typing import Tuple
 
 import pygame.sprite
 
-from macce.envs.sprites import Ship
-from macce.envs.sprites import Fort
-from macce.envs.utils import *
+from macce.env.sprites import Ship
+from macce.env.sprites import Fort
+from macce.env.utils import *
 
 """
 炮台均匀分布在防守方陆地上

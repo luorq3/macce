@@ -3,10 +3,10 @@ from typing import Optional, Tuple
 import gym
 import numpy as np
 import pygame
-from macce.envs.renderer import FightRenderer
-from macce.envs.game_logic import GameLogic
+from macce.env.renderer import FightRenderer
+from macce.env.game_logic import GameLogic
 
-from macce.envs.utils import load_images
+from macce.env.utils import load_images
 
 
 class MultiAgentCombatEnvRGB(gym.Env):

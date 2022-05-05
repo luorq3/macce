@@ -1,6 +1,6 @@
 from enum import IntEnum
 
-from macce.envs.sprites.base import SpriteBase
+from macce.env.sprites.base import SpriteBase
 
 
 class Movable:

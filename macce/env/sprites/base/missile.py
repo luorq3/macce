@@ -2,7 +2,7 @@ from abc import ABC
 from typing import Any
 
 from pygame.rect import Rect
-from macce.envs.sprites.base import SpriteBase
+from macce.env.sprites.base import SpriteBase
 
 
 class Missile(SpriteBase, ABC):

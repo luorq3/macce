@@ -1,6 +1,6 @@
-from macce.envs.sprites.base import SpriteBase, Movable
-from macce.envs.sprites.ship_missile import ShipMissile
-from macce.envs.utils import *
+from macce.env.sprites.base import SpriteBase, Movable
+from macce.env.sprites.ship_missile import ShipMissile
+from macce.env.utils import *
 
 import pygame
 

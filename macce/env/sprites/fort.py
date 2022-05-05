@@ -1,8 +1,8 @@
 import pygame
 
-from macce.envs.sprites.base import SpriteBase
-from macce.envs.sprites.fort_missile import FortMissile
-from macce.envs.utils import *
+from macce.env.sprites.base import SpriteBase
+from macce.env.sprites.fort_missile import FortMissile
+from macce.env.utils import *
 
 
 class Fort(SpriteBase):
