@@ -1,14 +1,14 @@
 from typing import Tuple
 
-import pygame
 from pygame.rect import Rect
+from pygame.sprite import Sprite
 
 
-class SpriteBase(pygame.sprite.Sprite):
+screen_size: Tuple[int, int] = (896, 896)
 
-    def __init__(self,
-                 screen_size: Tuple[int, int],
-                 rect: Rect):
+class SpriteBase(Sprite):
+
+    def __init__(self, rect: Rect):
         super(SpriteBase, self).__init__()
         self.screen_size = screen_size
         self.rect = rect

@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Tuple, Any
+from typing import Any
 
 from pygame.rect import Rect
 from macce.envs.sprites.base import SpriteBase
@@ -8,11 +8,10 @@ from macce.envs.sprites.base import SpriteBase
 class Missile(SpriteBase, ABC):
 
     def __init__(self,
-                 screen_size: Tuple[int, int],
                  rect: Rect,
                  speed: int = 5,
                  glide_range: int = 500):
-        super(Missile, self).__init__(screen_size, rect)
+        super(Missile, self).__init__(rect)
         self.speed = speed
         self.glide_range = glide_range
         self.distance = 0

@@ -1,4 +1,4 @@
-from macce.envs.sprites.base.sprite_base import SpriteBase
+from macce.envs.sprites.base.base import SpriteBase
 from macce.envs.sprites.base.movable import Movable
 from macce.envs.sprites.base.missile import Missile
 

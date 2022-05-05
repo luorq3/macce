@@ -1,5 +1,3 @@
-from typing import Tuple
-
 import pygame
 
 from macce.envs.sprites.base import SpriteBase
@@ -10,12 +8,11 @@ from macce.envs.utils import *
 class Fort(SpriteBase):
 
     def __init__(self,
-                 screen_size: Tuple[int, int],
                  rect: Rect,
                  missile_group: pygame.sprite.Group,
                  hp: int = 5,
                  turn_speed: int = 5):
-        super(Fort, self).__init__(screen_size, rect)
+        super(Fort, self).__init__(rect)
         self.hp = hp
         self.angle = 0
         self.radian = 0

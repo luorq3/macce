@@ -1,5 +1,4 @@
 import math
-from typing import Tuple
 
 from macce.envs.sprites.base import Missile
 
@@ -9,13 +8,12 @@ from pygame.rect import Rect
 class FortMissile(Missile):
 
     def __init__(self,
-                 screen_size: Tuple[int, int],
                  rect: Rect,
                  radian: float,
                  angle: int,
                  speed: int = 5,
                  glide_range: int = 500):
-        super(FortMissile, self).__init__(screen_size, rect, speed, glide_range)
+        super(FortMissile, self).__init__(rect, speed, glide_range)
         self.radian = radian
         self.angle = angle
         self.start_rect = self.rect.copy()

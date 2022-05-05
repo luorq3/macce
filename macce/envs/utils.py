@@ -10,6 +10,8 @@ _BASE_DIR = Path(os.path.dirname(os.path.realpath(__file__))).parent
 
 SPRITES_PATH = str(_BASE_DIR / 'assets/images')
 
+screen_size = (896, 896)
+
 ship_size = (40, 99)
 fort_size = (20, 20)
 ship_missile_size = (5, 8)

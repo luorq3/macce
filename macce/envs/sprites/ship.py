@@ -1,4 +1,3 @@
-from typing import Tuple
 from macce.envs.sprites.base import SpriteBase, Movable
 from macce.envs.sprites.ship_missile import ShipMissile
 from macce.envs.utils import *
@@ -9,12 +8,11 @@ import pygame
 class Ship(SpriteBase, Movable):
 
     def __init__(self,
-                 screen_size: Tuple[int, int],
                  rect: Rect,
                  missile_group: pygame.sprite.Group,
                  speed: int = 10,
                  hp: int = 5):
-        SpriteBase.__init__(self, screen_size, rect)
+        SpriteBase.__init__(self, rect)
         Movable.__init__(self, self, speed)
         self.hp = hp
         # self.missile_group = pygame.sprite.Group()
