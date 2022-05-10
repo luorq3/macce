@@ -1,7 +1,7 @@
 import pygame
 
 from macce.env.sprites.base import SpriteBase
-from macce.env.sprites.fort_missile import FortMissile
+from macce.env.sprites import Missile
 from macce.env.utils import *
 
 
@@ -20,10 +20,7 @@ class Fort(SpriteBase):
         self.turn_speed = turn_speed
 
     def fire(self):
-        missile = FortMissile(
-            self.screen_size,
-            Rect(*self.get_center_coord(), *fort_missile_size),
-            self.radian, self.angle)
+        missile = Missile(Rect(*self.get_center_coord(), *fort_missile_size))
         self.missile_group.add(missile)
 
     def update(self, target_x, target_y, *args: Any, **kwargs: Any) -> None:

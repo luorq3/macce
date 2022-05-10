@@ -1,11 +1,12 @@
 from enum import Enum, IntEnum
-from typing import Tuple
 
 import pygame.sprite
+import yaml
 
 from macce.env.sprites import Ship
 from macce.env.sprites import Fort
 from macce.env.utils import *
+
 
 """
 炮台均匀分布在防守方陆地上
@@ -36,42 +37,76 @@ def _ship_init_position(nums):
     return coords
 
 
-class GameLogic:
+def load_setting(file):
+    path = f'setting/{file}.yaml'
+    file = open(path, 'r')
+    return yaml.safe_load(file.read())
 
-    def __init__(self, images, screen_size: Tuple[int, int], ship_num=2, fort_num=2):
+
+def get_setting(game_version):
+    return load_setting('scenarios')[game_version]
+
+
+class Game:
+
+    def __init__(self, game_version='2s_vs_2f'):
         self._screen_size = screen_size
 
+        # load setting
+        setting = get_setting(game_version)
+
+        # game setting
+        self.name = setting['name']
+
         # Sprite group
-        self.ship_group = pygame.sprite.Group()
-        self.fort_group = pygame.sprite.Group()
-        self.ship_missile_group = pygame.sprite.Group()
-        self.fort_missile_group = pygame.sprite.Group()
+        self.attacker_group = pygame.sprite.Group()
+        self.defender_group = pygame.sprite.Group()
+        self.attacker_missile_group = pygame.sprite.Group()
+        self.defender_missile_group = pygame.sprite.Group()
+
+        # Create sprites
+        self._init(setting)
 
         # hit mask
-        self.ship_mask = get_hitmask(images["ship"])
-        self.fort_mask = get_hitmask(images["fort"])
-        self.ship_missile_mask = get_hitmask(images["ship_missile"])
-        self.fort_missile_mask = get_hitmask(images["fort_missile"])
+        # self.ship_mask = get_hitmask(images["ship"])
+        # self.fort_mask = get_hitmask(images["fort"])
+        # self.ship_missile_mask = get_hitmask(images["ship_missile"])
+        # self.fort_missile_mask = get_hitmask(images["fort_missile"])
 
-        # Create sprite
-        self._create_sprite(self.SpriteType.SHIP, ship_num)
-        self._create_sprite(self.SpriteType.FORT, fort_num)
+    def _init(self, setting):
+        attacker = setting.get(self.ConsType.ATTACKER)
+        if attacker.get(self.SpriteType.SHIP) is not None:
+            ship = attacker[self.SpriteType.SHIP]
+            ships = self._create_sprite(self.SpriteType.SHIP, **ship)
+            self.attacker_group.add(ships)
 
-    def _create_sprite(self, sprite_type, nums):
+        defender = setting.get(self.ConsType.DEFENDER)
+        if defender.get(self.SpriteType.FORT) is not None:
+            fort = defender[self.SpriteType.FORT]
+            forts = self._create_sprite(self.SpriteType.FORT, **fort)
+            self.attacker_group.add(forts)
+
+    def _create_sprite(self, sprite_type, **kwargs):
+        sprites = []
         if sprite_type == self.SpriteType.SHIP:
-            coords = _ship_init_position(nums)
+            coords = _ship_init_position(kwargs.get('number'))
             for x, y in coords:
-                ship = Ship(self._screen_size, Rect(x, y, *ship_size), self.ship_missile_group)
-                self.ship_group.add(ship)
+                ship = Ship(Rect(x, y, *ship_size), self.attacker_missile_group)
+                sprites.append(ship)
 
         elif sprite_type == self.SpriteType.FORT:
-            coords = _fort_init_position(nums)
+            coords = _fort_init_position(kwargs.get('number'))
             for x, y in coords:
-                fort = Fort(self._screen_size, Rect(x, y, *fort_size), self.fort_missile_group)
-                self.fort_group.add(fort)
+                fort = Fort(Rect(x, y, *fort_size), self.defender_missile_group)
+                sprites.append(fort)
         else:
             raise ValueError(f'Tried to create a {sprite_type} sprite,'
                              'but without such a sprite!')
+
+        return sprites
+
+    class ConsType(Enum):
+        ATTACKER, DEFENDER = 'attacker', 'defender'
 
     class SpriteType(Enum):
         SHIP, FORT = 'ship', 'fort'

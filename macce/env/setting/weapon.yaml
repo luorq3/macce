@@ -1,0 +1,13 @@
+bomb:
+  - range: 600
+#    speed: 5
+    damage: 1
+    interval: 4 # Minimal firing interval. Every `interval` frame can shoot once.
+  - range: 500
+#    speed: 5
+    damage: 2
+    interval: 4
+  - range: 400
+#    speed: 5
+    damage: 3
+    interval: 4

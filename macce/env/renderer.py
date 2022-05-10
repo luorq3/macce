@@ -1,6 +1,7 @@
 from typing import Tuple
 
 import pygame
+from macce.env.utils import load_images
 
 # Sea blue
 FILL_BACKGROUND_COLOR = (135, 206, 235)
@@ -10,14 +11,14 @@ FILL_BACKGROUND_COLOR = (135, 206, 235)
 
 class FightRenderer:
 
-    def __init__(self, images, screen_size: Tuple[int, int]):
+    def __init__(self, screen_size: Tuple[int, int]):
         self._screen_width = screen_size[0]
         self._screen_height = screen_size[1]
 
         self.display = None
         self.surface = pygame.Surface(screen_size)
 
-        self.images = images
+        self.images = load_images(convert=False)
 
         self.game = None
         self._clock = pygame.time.Clock()

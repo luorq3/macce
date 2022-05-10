@@ -23,7 +23,7 @@ class MultiAgentCombatEnvRGB(gym.Env):
 
         self._screen_size = screen_size
         self._game = None
-        self._renderer = FightRenderer(self.images, screen_size=self._screen_size)
+        self._renderer = FightRenderer(screen_size=self._screen_size)
 
     def _get_observation(self):
         self._renderer.draw_surface()
