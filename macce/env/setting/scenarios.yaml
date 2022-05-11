@@ -1,6 +1,9 @@
 2s_vs_2f:
   name: "2s_vs_2f"
   description: "2 ships versus 2 fort, ships learning to destroy forts cooperatively, and forts take random policy."
+  agents_num: 4
+  max_cycles: 1000
+  FPS: 30
   attacker:
     ship:
       number: 2

@@ -1,11 +1,11 @@
 import functools
 from pettingzoo.butterfly import pistonball_v6
 # from pettingzoo.magent import battle_v3
-from pettingzoo.atari import combat_plane_v2
+# from pettingzoo.atari import combat_plane_v2
 
 
-# env = pistonball_v6.env()
-env = combat_plane_v2.env()
+env = pistonball_v6.env()
+# env = combat_plane_v2.env()
 # env = pistonball_v6.parallel_env
 # pistonball_v6.env(n_pistons=20, time_penalty=-0.1, continuous=True,
 #                   random_drop=True, random_rotate=True, ball_mass=0.75, ball_friction=0.3,

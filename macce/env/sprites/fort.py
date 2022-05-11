@@ -8,11 +8,12 @@ from macce.env.utils import *
 class Fort(SpriteBase):
 
     def __init__(self,
+                 aorf: str,
                  rect: Rect,
                  missile_group: pygame.sprite.Group,
                  hp: int = 5,
                  turn_speed: int = 5):
-        super(Fort, self).__init__(rect)
+        super(Fort, self).__init__(aorf, rect)
         self.hp = hp
         self.angle = 0
         self.radian = 0

@@ -58,6 +58,9 @@ class Game:
         # game setting
         self.name = setting['name']
 
+        # agents
+        self.agents = ["agent_" + str(r) for r in range(setting['agents_num'])]
+
         # Sprite group
         self.attacker_group = pygame.sprite.Group()
         self.defender_group = pygame.sprite.Group()
@@ -67,24 +70,23 @@ class Game:
         # Create sprites
         self._init(setting)
 
-        # hit mask
-        # self.ship_mask = get_hitmask(images["ship"])
-        # self.fort_mask = get_hitmask(images["fort"])
-        # self.ship_missile_mask = get_hitmask(images["ship_missile"])
-        # self.fort_missile_mask = get_hitmask(images["fort_missile"])
-
     def _init(self, setting):
+        agent_entities = []
         attacker = setting.get(self.ConsType.ATTACKER)
         if attacker.get(self.SpriteType.SHIP) is not None:
             ship = attacker[self.SpriteType.SHIP]
             ships = self._create_sprite(self.SpriteType.SHIP, **ship)
+            agent_entities += ships
             self.attacker_group.add(ships)
 
         defender = setting.get(self.ConsType.DEFENDER)
         if defender.get(self.SpriteType.FORT) is not None:
             fort = defender[self.SpriteType.FORT]
             forts = self._create_sprite(self.SpriteType.FORT, **fort)
+            agent_entities += forts
             self.attacker_group.add(forts)
+
+        self.agent_name_mapping = dict(zip(self.agents, agent_entities))
 
     def _create_sprite(self, sprite_type, **kwargs):
         sprites = []
@@ -114,7 +116,10 @@ class Game:
     class Reward(IntEnum):
         FIRE, HIT, BE_HIT, DESTROY, BE_DESTROY, VICTORY, DEFEATED = 0, 1, -1, 2, -2, 3, -3
 
-    def update_state(self, actions: list):
+    def update_state(self, action: list, agent):
+
+        # entity = self.agent_name_mapping[agent]
+
         ship_actions = actions[0]
         fort_actions = actions[1]
 
