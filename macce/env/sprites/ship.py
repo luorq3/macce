@@ -1,5 +1,5 @@
 from macce.env.sprites.base import SpriteBase, Movable
-from macce.env.sprites import Missile
+from macce.env.sprites.missile import Missile
 from macce.env.utils import *
 
 import pygame

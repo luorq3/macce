@@ -5,7 +5,8 @@ from __future__ import print_function
 
 class MultiAgentEnv(object):
     def __init__(self):
-        self.n_agents = 0
+        self.n_attackers = 0
+        self.n_defenders = 0
         self.episode_limit = 0
 
     def step(self, actions):
@@ -66,7 +67,8 @@ class MultiAgentEnv(object):
             "state_shape": self.get_state_size(),
             "obs_shape": self.get_obs_size(),
             "n_actions": self.get_total_actions(),
-            "n_agents": self.n_agents,
+            "n_attackers": self.n_attackers,
+            "n_defenders": self.n_defenders,
             "episode_limit": self.episode_limit,
         }
         return env_info

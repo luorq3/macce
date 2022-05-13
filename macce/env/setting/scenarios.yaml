@@ -1,19 +1,21 @@
 2s_vs_2f:
   name: "2s_vs_2f"
   description: "2 ships versus 2 fort, ships learning to destroy forts cooperatively, and forts take random policy."
-  agents_num: 4
   max_cycles: 1000
   FPS: 30
   attacker:
+    num: 2
     ship:
-      number: 2
+      num: 2
       speed: [1, 1] # Should be int or list. If is int, it sets to all ship, else the length of the list must equal to `number`
       hp: [5, 5] # Hit point of corresponding ship
       bomb_class: [0, 1, 2] # Int or list. Index mapping to position in bomb list, shows which bomb to equip.
       bomb_loadage: [3, 3, 3] # Should be int or list. If is int, is applies to all bomb class, else mapping to corresponding index above.
   defender:
+    stochastic: true
+    num: 2
     fort:
-      number: 2
+      num: 2
       hp: [5, 5]
       bomb_class: 3
       bomb_loadage: 3

@@ -4,7 +4,7 @@ import gym
 import numpy as np
 import pygame
 from macce.env.renderer import FightRenderer
-from macce.env.game_logic import GameLogic
+# from macce.env.game_logic import GameLogic
 
 from macce.env.utils import load_images
 

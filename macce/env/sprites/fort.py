@@ -1,7 +1,7 @@
 import pygame
 
 from macce.env.sprites.base import SpriteBase
-from macce.env.sprites import Missile
+from macce.env.sprites.missile import Missile
 from macce.env.utils import *
 
 
