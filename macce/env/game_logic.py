@@ -5,6 +5,7 @@ import yaml
 from macce.env.multiagentenv import MultiAgentEnv
 from macce.env.utils import *
 from macce.env.sprites import Ship, Fort
+from macce.env.renderer import Renderer
 
 
 def _fort_init_position(nums):
@@ -43,6 +44,8 @@ def get_setting(version):
 
 class Macce(MultiAgentEnv):
 
+    metadata = {"render.modes": ["human", "rgb_array"]}
+
     def __init__(self, version='2s_vs_2f'):
         super(Macce, self).__init__()
         self.version = version
@@ -56,6 +59,12 @@ class Macce(MultiAgentEnv):
         self.defender_missile_group = pygame.sprite.Group()
 
         self._init(setting)
+
+        self._renderer = Renderer(screen_size,
+                                  self.attacker_group,
+                                  self.defender_group,
+                                  self.attacker_missile_group,
+                                  self.defender_missile_group)
 
     def _init(self, setting):
         attacker_entities = []
@@ -100,12 +109,17 @@ class Macce(MultiAgentEnv):
                              'but without such a sprite!')
         return sprites
 
+    # def _get_render(self):
+    #     self._renderer.draw_surface()
+    #     return pygame.surfarray.array3d(self._renderer.surface)
+
     def step(self, actions):
         rewards = []
         dones = []
         infos = []
         for action, agent in zip(actions, self.attackers):
-            reward, done, info = self.attacker_name_mapping[agent].handle(action)
+            self.attacker_name_mapping[agent].handle(action)
+            reward, done, info = None, None, None
             rewards.append(reward)
             dones.append(done)
             infos.append(info)
@@ -148,8 +162,18 @@ class Macce(MultiAgentEnv):
         """Returns initial observations and states."""
         raise NotImplementedError
 
-    def render(self):
-        raise NotImplementedError
+    def render(self, mode="human"):
+        if mode not in Macce.metadata['render.modes']:
+            raise ValueError("Invalid render mode!")
+
+        self._renderer.draw_surface()
+
+        if mode == 'rgb_array':
+            return pygame.surfarray.array3d(self._renderer.surface)
+        else:
+            if self._renderer.display is None:
+                self._renderer.make_display()
+            self._renderer.update_display()
 
     def close(self):
         raise NotImplementedError

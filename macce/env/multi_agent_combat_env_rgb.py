@@ -3,7 +3,7 @@ from typing import Optional, Tuple
 import gym
 import numpy as np
 import pygame
-from macce.env.renderer import FightRenderer
+from macce.env.renderer import Renderer
 # from macce.env.game_logic import GameLogic
 
 from macce.env.utils import load_images
@@ -23,7 +23,7 @@ class MultiAgentCombatEnvRGB(gym.Env):
 
         self._screen_size = screen_size
         self._game = None
-        self._renderer = FightRenderer(screen_size=self._screen_size)
+        self._renderer = Renderer(screen_size=self._screen_size)
 
     def _get_observation(self):
         self._renderer.draw_surface()
