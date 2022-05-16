@@ -49,24 +49,17 @@ class Macce(MultiAgentEnv):
     def __init__(self, version='2s_vs_2f'):
         super(Macce, self).__init__()
         self.version = version
-        setting = get_setting(version)
+        self.setting = get_setting(version)
+        self.name = self.setting['name']
+        self._init(self.setting)
 
-        self.name = setting['name']
+    def _init(self, setting):
 
         self.attacker_group = pygame.sprite.Group()
         self.defender_group = pygame.sprite.Group()
         self.attacker_missile_group = pygame.sprite.Group()
         self.defender_missile_group = pygame.sprite.Group()
 
-        self._init(setting)
-
-        self._renderer = Renderer(screen_size,
-                                  self.attacker_group,
-                                  self.defender_group,
-                                  self.attacker_missile_group,
-                                  self.defender_missile_group)
-
-    def _init(self, setting):
         attacker_entities = []
         defender_entities = []
         attacker = setting.get('attacker')
@@ -89,6 +82,12 @@ class Macce(MultiAgentEnv):
         self.defenders = ["defender_" + str(r) for r in range(self.n_defenders)]
         self.attacker_name_mapping = dict(zip(self.attackers, attacker_entities))
         self.defender_name_mapping = dict(zip(self.defenders, defender_entities))
+
+        self._renderer = Renderer(screen_size,
+                                  self.attacker_group,
+                                  self.defender_group,
+                                  self.attacker_missile_group,
+                                  self.defender_missile_group)
 
     def _create_sprite(self, sprite_type, **kwargs):
         sprites = []
@@ -114,6 +113,7 @@ class Macce(MultiAgentEnv):
         return pygame.surfarray.array3d(self._renderer.surface)
 
     def step(self, actions):
+        obs = []
         rewards = []
         dones = []
         infos = []
@@ -124,7 +124,7 @@ class Macce(MultiAgentEnv):
             dones.append(done)
             infos.append(info)
 
-        return rewards, dones, infos
+        return obs, rewards, dones, infos
 
     def get_obs(self):
         return [self.fort_coords] * self.n_attackers
@@ -158,8 +158,7 @@ class Macce(MultiAgentEnv):
         raise NotImplementedError
 
     def reset(self):
-        """Returns initial observations and states."""
-        raise NotImplementedError
+        self._init(self.setting)
 
     def render(self, mode="human"):
         if mode not in Macce.metadata['render.modes']:

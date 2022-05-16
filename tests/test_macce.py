@@ -17,7 +17,7 @@ def play_with_render(env):
     while True:
         env.render()
 
-        actions = [[0, 0]] * 2
+        actions = [0] * 2
         # Getting action
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -25,35 +25,29 @@ def play_with_render(env):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    actions[0][0] = 1
+                    actions[0] = 1
                 elif event.key == pygame.K_DOWN:
-                    actions[0][0] = 2
+                    actions[0] = 2
                 elif event.key == pygame.K_LEFT:
-                    actions[0][0] = 3
+                    actions[0] = 3
                 elif event.key == pygame.K_RIGHT:
-                    actions[0][0] = 4
+                    actions[0] = 4
                 elif event.key == pygame.K_SPACE:
-                    actions[0][0] = 5
-                elif event.key == pygame.K_z:
-                    actions[1][0] = 1
-                elif event.key == pygame.K_c:
-                    actions[1][0] = 2
-                elif event.key == pygame.K_x:
-                    actions[1][0] = 3
+                    actions[0] = 5
 
             # Processing
         obs, reward, done, info = env.step(actions)
 
-        score += reward
+        # score += reward
         # print(f"Obs shape: {obs.shape}")
-        print("Score: {}".format(score))
+        # print("Score: {}".format(score))
 
         clock.tick(30)
 
-        if done:
-            env.render()
-            time.sleep(0.6)
-            break
+        # if done:
+        #     env.render()
+        #     time.sleep(0.6)
+        #     break
 
 
 def visualize_obs(env, greyscale: bool):
