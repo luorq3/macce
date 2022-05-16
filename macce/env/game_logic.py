@@ -109,9 +109,9 @@ class Macce(MultiAgentEnv):
                              'but without such a sprite!')
         return sprites
 
-    # def _get_render(self):
-    #     self._renderer.draw_surface()
-    #     return pygame.surfarray.array3d(self._renderer.surface)
+    def _get_render(self):
+        self._renderer.draw_surface()
+        return pygame.surfarray.array3d(self._renderer.surface)
 
     def step(self, actions):
         rewards = []
@@ -136,8 +136,7 @@ class Macce(MultiAgentEnv):
         return self.fort_coords.shape
 
     def get_state(self):
-        """Returns the global state."""
-        raise NotImplementedError
+        return self._get_render()
 
     def get_state_size(self):
         """Returns the size of the global state."""
@@ -176,7 +175,9 @@ class Macce(MultiAgentEnv):
             self._renderer.update_display()
 
     def close(self):
-        raise NotImplementedError
+        if self._renderer is not None:
+            pygame.display.quit()
+            self._renderer = None
 
     def seed(self):
         raise NotImplementedError
