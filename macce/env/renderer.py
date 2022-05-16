@@ -47,7 +47,7 @@ class Renderer:
         pygame.draw.circle(self.surface, (233, 150, 122), (self._screen_width / 2, 0), 224)
 
         for ship in self.attacker_group.sprites():
-            self.surface.blit(self.images['ship'], ship.rect[:2])
+            self.surface.blit(pygame.transform.rotate(self.images['ship'], ship.angle()), ship.rect[:2])
         for fort in self.defender_group.sprites():
             self.surface.blit(pygame.transform.rotate(self.images['fort'], fort.angle),
                               fort.rect[:2])

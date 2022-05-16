@@ -21,6 +21,10 @@ def _fort_init_position(nums):
 
 
 def _ship_init_position(nums):
+
+    if nums == 1:
+        return [(450, 450)]
+
     coords = []
     x = 0
     gap = 856 / (nums + 1)

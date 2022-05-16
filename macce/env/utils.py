@@ -83,6 +83,12 @@ def load_image(filename, convert: bool = True) -> Any:
                                 f"directory: {SPRITES_PATH}") from ex
     return image
 
+def angle_to_radian(angle):
+    return angle * math.pi / 180
+
+def radian_to_angle(radian):
+    return int(radian * 180 / math.pi)
+
 
 if __name__ == '__main__':
     img1 = load_image('ship', False)

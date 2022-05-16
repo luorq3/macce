@@ -13,15 +13,15 @@ class Ship(SpriteBase):
                  missile_group: pygame.sprite.Group,
                  speed: int = 10,
                  hp: int = 5,
-                 turn_radian: int = 5):
+                 turn_angle: int = 5):
         SpriteBase.__init__(self, aorf, rect)
         self.hp = hp
         self.missile_group = missile_group
         self.init_rect = rect.copy()
         self.speed = speed
         self.distance = 0
-        self.radian = 0
-        self.turn_radian = turn_radian
+        self.radian = math.pi
+        self.turn_angle = turn_angle
 
     def fire(self):
         missile = Missile(Rect(*self.get_center_coord(), *ship_missile_size))
@@ -42,9 +42,9 @@ class Ship(SpriteBase):
 
     def turn(self, turn_right):
         if turn_right:
-            radian = self.turn_radian
+            radian = angle_to_radian(self.turn_angle)
         else:
-            radian = -self.turn_radian
+            radian = -angle_to_radian(self.turn_angle)
         self.radian += radian
 
     def handle(self, action):
@@ -55,3 +55,6 @@ class Ship(SpriteBase):
         else:
             # self.fire()
             print("fire!!!")
+
+    def angle(self):
+        return radian_to_angle(self.radian)

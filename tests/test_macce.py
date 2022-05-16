@@ -63,7 +63,7 @@ def visualize_obs(env, greyscale: bool):
 
 
 if __name__ == "__main__":
-    env = Macce()
+    env = Macce(version="1s_vs_1f")
 
     # print(f"Action space: {env.get_total_actions()}")
     # print(f"Observation space: {env.get_state()}")
