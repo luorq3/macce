@@ -58,3 +58,6 @@ class Ship(SpriteBase):
 
     def angle(self):
         return radian_to_angle(self.radian)
+
+
+ship = Ship('attacker', Rect(700, 450, 40, 99), pygame.sprite.Group())
