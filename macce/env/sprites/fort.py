@@ -11,8 +11,8 @@ class Fort(SpriteBase):
                  aorf: str,
                  rect: Rect,
                  missile_group: pygame.sprite.Group,
-                 hp: int = 5,
-                 turn_speed: int = 5):
+                 hp: float = 5,
+                 turn_speed: float = 5):
         super(Fort, self).__init__(aorf, rect)
         self.hp = hp
         self.angle = 0
