@@ -17,9 +17,7 @@ class Ship(SpriteBase):
         SpriteBase.__init__(self, aorf, rect)
         self.hp = hp
         self.missile_group = missile_group
-        self.init_rect = rect.copy()
         self.speed = speed
-        self.distance = 0
         self.radian = math.pi
         self.turn_angle = turn_angle
 
@@ -28,15 +26,14 @@ class Ship(SpriteBase):
         self.missile_group.add(missile)
 
     def move_forward(self):
-        self.distance += self.speed
 
-        offset_x = self.distance * math.sin(self.radian)
-        offset_y = self.distance * math.cos(self.radian)
+        offset_x = self.speed * math.sin(self.radian)
+        offset_y = self.speed * math.cos(self.radian)
 
-        if 0 < self.init_rect.x + offset_x < self.max_rect[0] \
-                and 0 < self.init_rect.y + offset_y < self.max_rect[1]:
-            self.rect.x = self.init_rect.x + offset_x
-            self.rect.y = self.init_rect.y + offset_y
+        if 0 < self.rect.x + offset_x < self.max_rect[0] \
+                and 0 < self.rect.y + offset_y < self.max_rect[1]:
+            self.rect.x = self.rect.x + offset_x
+            self.rect.y = self.rect.y + offset_y
         else:
             self.kill()
 
@@ -58,6 +55,3 @@ class Ship(SpriteBase):
 
     def angle(self):
         return radian_to_angle(self.radian)
-
-
-ship = Ship('attacker', Rect(700, 450, 40, 99), pygame.sprite.Group())
