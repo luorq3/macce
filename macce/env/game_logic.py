@@ -55,6 +55,9 @@ class Macce(MultiAgentEnv):
         self.version = version
         self.setting = get_setting(version)
         self.name = self.setting['name']
+
+        self.n_actions = 10
+
         self._init(self.setting)
 
     def _init(self, setting):
@@ -97,15 +100,15 @@ class Macce(MultiAgentEnv):
         sprites = []
         if sprite_type == 'ship':
             coords = _ship_init_position(kwargs.get('num'))
-            for x, y in coords:
-                ship = Ship('attacker', Rect(x, y, *ship_size), self.attacker_missile_group)
+            for i, (x, y) in enumerate(coords):
+                ship = Ship('attacker', i, Rect(x, y, *ship_size), self.attacker_missile_group, **kwargs)
                 sprites.append(ship)
 
         elif sprite_type == 'fort':
             coords = _fort_init_position(kwargs.get('num'))
             self.fort_coords = np.array(coords)
-            for x, y in coords:
-                fort = Fort('defender', Rect(x, y, *fort_size), self.defender_missile_group)
+            for i, (x, y) in enumerate(coords):
+                fort = Fort('defender', i, Rect(x, y, *fort_size), self.defender_missile_group, **kwargs)
                 sprites.append(fort)
         else:
             raise ValueError(f'Tried to create a {sprite_type} sprite,'
@@ -117,6 +120,16 @@ class Macce(MultiAgentEnv):
         return pygame.surfarray.array3d(self._renderer.surface)
 
     def step(self, actions):
+        actions_int = [int(a) for a in actions]
+        self.last_action = np.eye(self.n_actions)[np.array(actions_int)]
+
+        for a_id, action in enumerate(actions_int):
+            a_id = "attacker_" + str(a_id)
+            avail_actions = self.get_avail_agent_actions(a_id)
+            assert (
+                avail_actions[action] == 1
+            ), f"Agent {a_id} cannot perform action {action}"
+
         obs = []
         rewards = []
         dones = []
@@ -149,13 +162,33 @@ class Macce(MultiAgentEnv):
     def get_avail_actions(self):
         avail_actions = []
         for agent_id in range(self.n_attackers):
-            avail_agent = self.get_avail_agent_actions(agent_id)
-            avail_actions.append(avail_agent)
+            avail_action = self.get_avail_agent_actions(agent_id)
+            avail_actions.append(avail_action)
         return avail_actions
 
     def get_avail_agent_actions(self, agent_id):
-        """Returns the available actions for agent_id."""
-        raise NotImplementedError
+        unit = self.attacker_name_mapping[agent_id]
+
+        if unit.health <= 0:
+            return [1] + [0] * (self.n_actions - 1)
+
+        avail_actions = [0] * self.n_actions
+        avail_actions[1:4] = [1] * 3
+
+        if not unit.can_fire():
+            return avail_actions
+
+        bombs_num = unit.get_bombs_num()
+        enemies_num = len(self.defenders)
+        for e_name, e_unit in self.defender_name_mapping.items():
+            if e_unit.health > 0:
+                e_id = int(e_name.split('_')[1])
+                for i in range(len(bombs_num)):
+                    if bombs_num[i] > 0:
+                        ac_id = enemies_num * i + e_id
+                        avail_actions[ac_id + 4] = 1
+
+        return avail_actions
 
     def get_total_actions(self):
         """Returns the total number of actions an agent could ever take."""

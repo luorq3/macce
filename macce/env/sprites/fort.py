@@ -9,16 +9,16 @@ class Fort(SpriteBase):
 
     def __init__(self,
                  aorf: str,
+                 index,
                  rect: Rect,
                  missile_group: pygame.sprite.Group,
-                 hp: float = 5,
-                 turn_speed: float = 5):
+                 **kwargs):
         super(Fort, self).__init__(aorf, rect)
-        self.hp = hp
+        self.health = kwargs['health'][index]
         self.angle = 0
         self.radian = 0
         self.missile_group = missile_group
-        self.turn_speed = turn_speed
+        # self.turn_speed = 5
 
     def fire(self):
         missile = Missile(Rect(*self.get_center_coord(), *fort_missile_size))
@@ -32,10 +32,10 @@ class Fort(SpriteBase):
 
         self.angle = int(self.radian * 180 / math.pi)
 
-    def turn(self, action):
-        if action == 1:
-            self.angle -= self.turn_speed
-        elif action == 2:
-            self.angle += self.turn_speed
-
-        self.radian = self.angle * math.pi / 180
+    # def turn(self, action):
+    #     if action == 1:
+    #         self.angle -= self.turn_speed
+    #     elif action == 2:
+    #         self.angle += self.turn_speed
+    #
+    #     self.radian = self.angle * math.pi / 180

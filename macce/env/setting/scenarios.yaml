@@ -6,7 +6,7 @@
     ship:
       num: 1
       speed: 1 # Should be int or list. If is int, it sets to all ship, else the length of the list must equal to `number`
-      hp: 5 # Hit point of corresponding ship
+      health: 5 # Hit point of corresponding ship
       bomb_class: 0 # Int or list. Index mapping to position in bomb list, shows which bomb to equip.
       bomb_loadage: 3 # Should be int or list. If is int, is applies to all bomb class, else mapping to corresponding index above.
   defender:
@@ -14,7 +14,7 @@
     num: 1
     fort:
       num: 1
-      hp: 5
+      health: 5
       bomb_class: 0
       bomb_loadage: 3
 
@@ -28,7 +28,7 @@
     ship:
       num: 2
       speed: [1, 1] # Should be int or list. If is int, it sets to all ship, else the length of the list must equal to `number`
-      hp: [5, 5] # Hit point of corresponding ship
+      health: [5, 5] # Hit point of corresponding ship
       bomb_class: [0, 1, 2] # Int or list. Index mapping to position in bomb list, shows which bomb to equip.
       bomb_loadage: [3, 3, 3] # Should be int or list. If is int, is applies to all bomb class, else mapping to corresponding index above.
   defender:
@@ -36,6 +36,6 @@
     num: 2
     fort:
       num: 2
-      hp: [5, 5]
+      health: [5, 5]
       bomb_class: 3
       bomb_loadage: 3

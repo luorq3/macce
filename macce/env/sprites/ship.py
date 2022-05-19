@@ -9,15 +9,14 @@ class Ship(SpriteBase):
 
     def __init__(self,
                  aorf: str,  # defender or attacker
+                 index,
                  rect: Rect,
                  missile_group: pygame.sprite.Group,
-                 speed: float = 10,
-                 hp: float = 5,
-                 turn_angle: float = 5):
+                 turn_angle: float = 5, **kwargs):
         SpriteBase.__init__(self, aorf, rect)
-        self.hp = hp
+        self.health = kwargs['health'][index]
         self.missile_group = missile_group
-        self.speed = speed
+        self.speed = kwargs['speed'][index]
         self.radian = math.pi
         self.turn_angle = turn_angle
 
@@ -57,3 +56,11 @@ class Ship(SpriteBase):
 
     def angle(self):
         return radian_to_angle(self.radian)
+
+    # todo 返回数组分别表示各种炮弹数量
+    def get_bombs_num(self):
+        pass
+
+    # todo 攻击间隔
+    def can_fire(self):
+        pass
