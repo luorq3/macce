@@ -8,11 +8,12 @@ from macce.env.sprites.base import SpriteBase
 class Missile(SpriteBase, ABC):
 
     def __init__(self,
+                 aorf,
                  rect: Rect,
                  speed: int = 5,
                  **kwargs
                  ):
-        super(Missile, self).__init__(rect)
+        super(Missile, self).__init__(aorf, rect)
         self.glide_range = kwargs['range']
         self.damage = kwargs['damage']
         self.interval = kwargs['interval']

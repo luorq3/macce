@@ -27,7 +27,7 @@ ship_init_rect = Rect(0, 790, 40, 99)
 
 
 def load_setting(file):
-    path = f'../env/setting/{file}.yaml'
+    path = f'../macce/env/setting/{file}.yaml'
     file = open(path, 'r')
     return yaml.safe_load(file.read())
 

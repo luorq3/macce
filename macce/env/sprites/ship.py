@@ -14,17 +14,17 @@ class Ship(SpriteBase):
                  missile_group: pygame.sprite.Group,
                  turn_angle: float = 5, **kwargs):
         SpriteBase.__init__(self, aorf, rect)
-        self.health = kwargs['health'][index]
+        self.health = kwargs['health'] if isinstance(kwargs['health'], int) else kwargs['health'][index]
         self.missile_group = missile_group
-        self.speed = kwargs['speed'][index]
+        self.speed = kwargs['speed'] if isinstance(kwargs['speed'], int) else kwargs['speed'][index]
         self.radian = math.pi
         self.turn_angle = turn_angle
-        bomb_class = kwargs['bomb_class']
-        bomb_loadage = kwargs['bomb_loadage']
+        bomb_class = [kwargs['bomb_class']] if isinstance(kwargs['bomb_class'], int) else kwargs['bomb_class']
+        bomb_loadage = [kwargs['bomb_loadage']] if isinstance(kwargs['bomb_class'], int) else kwargs['bomb_class']
         bombs = get_weapon()['bomb']
         self.missiles = []
         for i, loadage in zip(bomb_class, bomb_loadage):
-            missile = Missile(self.rect, loadage=loadage, **bombs[i])
+            missile = Missile(aorf, self.rect, loadage=loadage, **bombs[i])
             self.missiles.append(missile)
 
     def fire(self, action):
