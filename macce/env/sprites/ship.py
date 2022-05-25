@@ -19,11 +19,25 @@ class Ship(SpriteBase):
         self.speed = kwargs['speed'][index]
         self.radian = math.pi
         self.turn_angle = turn_angle
+        bomb_class = kwargs['bomb_class']
+        bomb_loadage = kwargs['bomb_loadage']
+        bombs = get_weapon()['bomb']
+        self.missiles = []
+        for i, loadage in zip(bomb_class, bomb_loadage):
+            missile = Missile(self.rect, loadage=loadage, **bombs[i])
+            self.missiles.append(missile)
 
-    def fire(self, enemy):
+    def fire(self, action):
         # missile = Missile(Rect(*self.get_center_coord(), *ship_missile_size))
         # self.missile_group.add(missile)
-        pass
+        assert (
+            self.can_fire()
+        ), f"Agent cannot fire."
+
+        enemy, bomb = self.action_to_enemy(action)
+
+
+        return 0, False
 
     def move_forward(self):
 
@@ -46,13 +60,16 @@ class Ship(SpriteBase):
 
     def handle(self, action):
         if action == 0:
-            return
+            return 0, False
         elif action == 1:
             self.move_forward()
+            return 0, False
         elif action == 2 or action == 3:
             self.turn(action % 2)
+            return 0, False
         else:
-            self.fire(action)
+            reward, done = self.fire(action)
+            return reward, done
 
     def angle(self):
         return radian_to_angle(self.radian)
@@ -64,3 +81,7 @@ class Ship(SpriteBase):
     # todo 攻击间隔
     def can_fire(self):
         pass
+
+    def action_to_enemy(self, action):
+        enemy, bomb = 0, 0
+        return enemy, bomb

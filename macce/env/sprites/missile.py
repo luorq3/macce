@@ -9,16 +9,16 @@ class Missile(SpriteBase, ABC):
 
     def __init__(self,
                  rect: Rect,
-                 glide_range: int = 500,
                  speed: int = 5,
-                 damage: int = 2,
-                 interval: int = 4
+                 **kwargs
                  ):
         super(Missile, self).__init__(rect)
-        self.glide_range = glide_range
+        self.glide_range = kwargs['range']
+        self.damage = kwargs['damage']
+        self.interval = kwargs['interval']
+        self.loadage = kwargs['loadage']
+        self.penalty = kwargs['penalty']
         self.speed = speed
-        self.damage = damage
-        self.interval = interval
         self.distance = 0
         self.fix_coord()
 

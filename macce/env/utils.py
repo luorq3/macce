@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from typing import List, Dict, Any
 
+import yaml
 from pygame import image as pyg_image
 from pygame import Rect
 
@@ -23,6 +24,20 @@ beach_rect = Rect(224, 0, 448, 224)
 fort_beach_rect = Rect(248, 0, 400, 200)
 # 舰艇初始化时，处于屏幕的下方，x方向均匀排列，y方向坐标=790
 ship_init_rect = Rect(0, 790, 40, 99)
+
+
+def load_setting(file):
+    path = f'../env/setting/{file}.yaml'
+    file = open(path, 'r')
+    return yaml.safe_load(file.read())
+
+
+def get_setting(version):
+    return load_setting('scenarios')[version]
+
+
+def get_weapon():
+    return load_setting('weapon')
 
 
 def pixel_collision(rect1: Rect,
@@ -88,6 +103,10 @@ def angle_to_radian(angle):
 
 def radian_to_angle(radian):
     return int(radian * 180 / math.pi)
+
+# 两个精灵的起点距离
+def distance(a: Rect, b: Rect):
+    return math.sqrt((float(a.x) - b.x)**2 + (float(a.y) - b.y)**2)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,5 @@
 import numpy as np
 import pygame
-import yaml
 
 from macce.env.multiagentenv import MultiAgentEnv
 from macce.env.utils import *
@@ -34,16 +33,6 @@ def _ship_init_position(nums):
         coords.append((int(x), int(y)))
 
     return coords
-
-
-def load_setting(file):
-    path = f'../macce/env/setting/{file}.yaml'
-    file = open(path, 'r')
-    return yaml.safe_load(file.read())
-
-
-def get_setting(version):
-    return load_setting('scenarios')[version]
 
 
 class Macce(MultiAgentEnv):
@@ -120,28 +109,24 @@ class Macce(MultiAgentEnv):
         return pygame.surfarray.array3d(self._renderer.surface)
 
     def step(self, actions):
+        # obs = []
+        rewards = []
+        dones = []
+        # infos = []
+
         actions_int = [int(a) for a in actions]
         self.last_action = np.eye(self.n_actions)[np.array(actions_int)]
 
-        for a_id, action in enumerate(actions_int):
-            a_id = "attacker_" + str(a_id)
-            avail_actions = self.get_avail_agent_actions(a_id)
+        for agent, action in zip(self.attackers, actions):
+            avail_actions = self.get_avail_agent_actions(agent)
             assert (
-                avail_actions[action] == 1
-            ), f"Agent {a_id} cannot perform action {action}"
-
-        obs = []
-        rewards = []
-        dones = []
-        infos = []
-        for action, agent in zip(actions, self.attackers):
-            self.attacker_name_mapping[agent].handle(action)
-            reward, done, info = None, None, None
+                    avail_actions[action] == 1
+            ), f"Agent {agent} cannot perform action {action}"
+            reward, done = self.attacker_name_mapping[agent].handle(action)
             rewards.append(reward)
             dones.append(done)
-            infos.append(info)
 
-        return obs, rewards, dones, infos
+        return rewards, dones
 
     def get_obs(self):
         return [self.fort_coords] * self.n_attackers
