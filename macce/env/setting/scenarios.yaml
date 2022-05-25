@@ -2,7 +2,7 @@
   name: "1s_vs_1f"
   description: "1 ship versus 1 fort for debug"
   attacker:
-    num: 1
+#    num: 1
     ship:
       num: 1
       speed: 1 # Should be int or list. If is int, it sets to all ship, else the length of the list must equal to `number`
@@ -10,9 +10,9 @@
       bomb_class: 0 # Int or list. Index mapping to position in bomb list, shows which bomb to equip.
       bomb_loadage: 3 # Should be int or list. If is int, is applies to all bomb class, else mapping to corresponding index above.
   defender:
-    stochastic: true
-    num: 1
+#    num: 1
     fort:
+      stochastic: true
       num: 1
       health: 5
       bomb_class: 0
