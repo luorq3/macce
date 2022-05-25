@@ -39,9 +39,10 @@ class Macce(MultiAgentEnv):
 
     metadata = {"render.modes": ["human", "rgb_array"]}
 
-    def __init__(self, version='2s_vs_2f'):
+    def __init__(self, version='2s_vs_2f', seed=0):
         super(Macce, self).__init__()
         self.version = version
+        self._seed = seed
         self.setting = get_setting(version)
         self.name = self.setting['name']
 
@@ -140,9 +141,9 @@ class Macce(MultiAgentEnv):
     def get_state(self):
         return self._get_render()
 
-    def get_state_size(self):
-        """Returns the size of the global state."""
-        raise NotImplementedError
+    # def get_state_size(self):
+    #     """Returns the size of the global state."""
+    #     raise NotImplementedError
 
     def get_avail_actions(self):
         avail_actions = []
@@ -177,7 +178,7 @@ class Macce(MultiAgentEnv):
 
     def get_total_actions(self):
         """Returns the total number of actions an agent could ever take."""
-        raise NotImplementedError
+        return self.n_actions
 
     def reset(self):
         self._init(self.setting)
@@ -201,11 +202,11 @@ class Macce(MultiAgentEnv):
             self._renderer = None
 
     def seed(self):
-        raise NotImplementedError
+        return self._seed
 
-    def save_replay(self):
-        """Save a replay."""
-        raise NotImplementedError
+    # def save_replay(self):
+    #     """Save a replay."""
+    #     raise NotImplementedError
 
     def get_env_info(self):
         env_info = super(Macce, self).get_env_info()
