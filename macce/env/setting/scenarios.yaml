@@ -2,21 +2,25 @@
   name: "1s_vs_1f"
   description: "1 ship versus 1 fort for debug"
   attacker:
-#    num: 1
+    num: 1
     ship:
+      fire_interval: 5 # every 5 actions can fire once
       num: 1
       speed: 1 # Should be int or list. If is int, it sets to all ship, else the length of the list must equal to `number`
       health: 5 # Hit point of corresponding ship
-      bomb_class: 0 # Int or list. Index mapping to position in bomb list, shows which bomb to equip.
-      bomb_loadage: 3 # Should be int or list. If is int, is applies to all bomb class, else mapping to corresponding index above.
+      missile_class: 0 # Int or list. Index mapping to position in bomb list, shows which bomb to equip.
+      missile_loadage: 3 # Should be int or list. If is int, is applies to all bomb class, else mapping to corresponding index above.
+      miss_prob: [1, 0.8, 0.6] # When firing, have prob of `miss_prob` miss the missile, otherwise hit.
   defender:
-#    num: 1
+    num: 1
     fort:
       stochastic: true
+      fire_interval: 5 # every 5 actions can fire once
       num: 1
       health: 5
-      bomb_class: 0
-      bomb_loadage: 3
+      missile_class: 0
+      missile_loadage: 3
+      miss_prob: [1, 0.8, 0.6]
 
 2s_vs_2f:
   name: "2s_vs_2f"
@@ -26,16 +30,20 @@
   attacker:
     num: 2
     ship:
+      fire_interval: 5
       num: 2
       speed: [1, 1] # Should be int or list. If is int, it sets to all ship, else the length of the list must equal to `number`
       health: [5, 5] # Hit point of corresponding ship
-      bomb_class: [0, 1, 2] # Int or list. Index mapping to position in bomb list, shows which bomb to equip.
-      bomb_loadage: [3, 3, 3] # Should be int or list. If is int, is applies to all bomb class, else mapping to corresponding index above.
+      missile_class: [0, 1, 2] # Int or list. Index mapping to position in bomb list, shows which bomb to equip.
+      missile_loadage: [3, 3, 3] # Should be int or list. If is int, is applies to all bomb class, else mapping to corresponding index above.
+      miss_prob: [1, 0.8, 0.6]
   defender:
     stochastic: true
     num: 2
     fort:
+      fire_interval: 5
       num: 2
       health: [5, 5]
-      bomb_class: 3
-      bomb_loadage: 3
+      missile_class: 3
+      missile_loadage: 3
+      miss_prob: [1, 0.8, 0.6]

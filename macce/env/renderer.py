@@ -49,8 +49,9 @@ class Renderer:
         for ship in self.attacker_group.sprites():
             self.surface.blit(pygame.transform.rotate(self.images['ship'], ship.angle()), ship.rect[:2])
         for fort in self.defender_group.sprites():
-            self.surface.blit(pygame.transform.rotate(self.images['fort'], fort.angle),
-                              fort.rect[:2])
+            # self.surface.blit(pygame.transform.rotate(self.images['fort'], fort.angle),
+            #                   fort.rect[:2])
+            self.surface.blit(self.images['fort'], fort.rect[:2])
 
         for missile in self.attacker_missile_group.sprites():
             self.surface.blit(self.images['ship_missile'], missile.rect[:2])

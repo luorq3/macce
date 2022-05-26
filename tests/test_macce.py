@@ -1,4 +1,4 @@
-from macce.env.game_logic import Macce
+from macce.env.macce import Macce
 
 import time
 
@@ -32,7 +32,8 @@ def play_with_render(env):
                     actions[0] = 3
 
         # Processing
-        obs, reward, done, info = env.step(actions)
+        # obs, reward, done, info = env.step(actions)
+        reward, done = env.step(actions)
 
         # score += reward
         # print(f"Obs shape: {obs.shape}")

@@ -1,16 +1,19 @@
-bomb:
+missile:
   - range: 600
 #    speed: 5
     damage: 1
-    interval: 4 # Minimal firing interval. Every `interval` frame can shoot once.
+#    interval: 4 # Minimal firing interval. Every `interval` frame can shoot once.
     penalty: 1 # Will receive a penalty if one fire this but enemy not in flight range.
+    damage_radius: 50 #
   - range: 500
 #    speed: 5
     damage: 2
-    interval: 4
+#    interval: 4
     penalty: 1
+    damage_radius: 50 #
   - range: 400
 #    speed: 5
     damage: 3
-    interval: 4
+#    interval: 4
     penalty: 1
+    damage_radius: 50 #
